@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Univers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UniversController extends Controller
 {
@@ -85,6 +86,7 @@ class UniversController extends Controller
      */
     public function destroy(Univers $univers)
     {
-        //
+        Auth::logout();
+        return redirect()->route('/')->with('success', 'déconnecter');
     }
 }

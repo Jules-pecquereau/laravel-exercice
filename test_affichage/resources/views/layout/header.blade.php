@@ -9,6 +9,17 @@
   <body>
       <h1>Univers</h1>
       <a href="/AjouterForm" class="btn btn-outline-primary">ajouter des univers</a>
+      <h1>Bonjour {{ Auth::user()->name ?? null}}</h1>
+
+                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">les actions</a>
+                    <ul class="dropdown-menu">
+                        @if (auth::check() )
+                            <li><a class="dropdown-item" href="/logout" >se déconnecter</a></li>
+                        @else
+                            <li><a class="dropdown-item" href="/login" >se connecter</a></li>
+                        @endif
+                        <li><a class="dropdown-item" href="#">supprimer</a></li>
+                    </ul>
     @yield("content")
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 

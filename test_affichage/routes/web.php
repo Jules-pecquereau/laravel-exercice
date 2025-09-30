@@ -1,10 +1,31 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\AcceuilController;
 use App\Http\Controllers\UniversController;
+use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
+
 
 Route::resource('Univers', UniversController::class);
 Route::get("/", [UniversController::class,'index'])->name('/');
 Route::get("/AjouterForm", [UniversController::class,'AjouterForm'])->name('Ajouter.form');
 Route::post("/AjouterForm",[UniversController::class,'store'])->name('Ajouter.store');
+
+Route::get("/logout", [UniversController::class , 'destroy'])->name('logout');
