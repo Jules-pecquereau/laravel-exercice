@@ -2,11 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AcceuilController;
-use App\Http\Controllers\TestController;
+use App\Http\Controllers\UniversController;
 
-Route::get('multiplier/{a}/{b?}', function( int $a, int $b = 1){
-    return " je suis sur la page ".$a*$b;
-});
-Route::get("/", [AcceuilController::class,'acceuil']);
-Route::get("/about/{message?}", [AcceuilController::class,'about']);
-Route::resource('TestController', TestController::class);
+Route::resource('Univers', UniversController::class);
+Route::get("/", [UniversController::class,'index']);
+Route::get("/AjouterForm", [UniversController::class,'AjouterForm'])->name('Ajouter.form');
+Route::post("/AjouterForm",[UniversController::class,'store'])->name('Ajouter.store');
