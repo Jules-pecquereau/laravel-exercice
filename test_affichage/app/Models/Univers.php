@@ -12,6 +12,9 @@ class Univers extends Model
         protected $fillable = [
         'nom',
         'description',
-
+        "lien_vers_le_logo",
+        "lien_vers_l'image",
+        "couleur_secondaire",
+        "couleur_principale",
     ];
 }

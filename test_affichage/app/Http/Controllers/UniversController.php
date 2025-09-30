@@ -17,7 +17,8 @@ class UniversController extends Controller
     }
     public function AjouterForm()
     {
-        return view('formulaire'); //affiche le formulaire de création
+        $liste = Univers::all();
+        return view('formulaire' , compact('liste')); //affiche le formulaire de création
     }
     /**
      * Show the form for creating a new resource.
@@ -33,14 +34,26 @@ class UniversController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nom'=> 'required|string|max:255',
-            'description'=> 'required|string|max:1000',
+            'nom'=> 'required|max:255',
+            'description'=> 'required|max:1000',
+            'img'=> 'required|min:6',
+            'ImgDeFond'=> 'required|min:6',
+            'couleur_principale'=>'required|min:6',
+            'couleur_secondaire'=>'required|min:6',
         ]);
+
+        $pathImg = $request ->file('img')->store('image','public');
+        $pathImgFond = $request ->file('ImgDeFond')->store('image','public');
+
         Univers::create([
             'nom'=> $request->nom,
             'description'=> $request->description,
+            "lien_vers_le_logo" => $pathImg,
+            "lien_vers_l'image" => $pathImgFond,
+            'couleur_principale'=>$request->couleur_principale,
+            'couleur_secondaire'=>$request->couleur_secondaire,
         ]);
-        return redirect()->route('Ajouter.form')->with('success', 'univers crée');
+        return redirect()->route('/')->with('success', 'univers crée');
     }
 
     /**
