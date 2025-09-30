@@ -1,14 +1,11 @@
+
 <div>
     <form action="{{route('Ajouter.store')}}" method="POST" enctype="multipart/form-data">
-         @csrf
-        <label for="nom">Nom de L'univer :</label>
-        <input type="text" name="nom" value="">
-        <label for="description">Description de l'univer:</label>
-        <input type="text" name="description" value="">
-        <label for="img">l'image de l'univer</label>
-        <input type="file" name="img" id="">
-        <label for="img">l'image de fond de l'univer</label>
-        <input type="file" name="ImgDeFond" id="">
+        @csrf
+        <x-inputs.input-text property="nom" label="Nom de l'univers" />
+        <x-inputs.input-text property="description" label="Description de l'univer:" />
+        <x-inputs.input-img nom="img" libelle="l'image de l'univer" />
+        <x-inputs.input-img nom="ImgDeFond" libelle="l'image de fond de l'univer" />
         <label for="couleur_principale">couleur principale</label>
         <input type="color" name="couleur_principale" id="">
         <label for="couleur_secondaire">couleur secoudaire</label>

@@ -36,10 +36,10 @@ class UniversController extends Controller
         $request->validate([
             'nom'=> 'required|max:255',
             'description'=> 'required|max:1000',
-            'img'=> 'required|min:6',
-            'ImgDeFond'=> 'required|min:6',
-            'couleur_principale'=>'required|min:6',
-            'couleur_secondaire'=>'required|min:6',
+            'img'=> 'required|file|mimes:png,jpg,jpeg',
+            'ImgDeFond'=> 'required|file|mimes:png,jpg,jpeg',
+            'couleur_principale'=>'required|hex_color',
+            'couleur_secondaire'=>'required|hex_color',
         ]);
 
         $pathImg = $request ->file('img')->store('image','public');
@@ -49,7 +49,7 @@ class UniversController extends Controller
             'nom'=> $request->nom,
             'description'=> $request->description,
             "lien_vers_le_logo" => $pathImg,
-            "lien_vers_l'image" => $pathImgFond,
+            "lien_vers_l_image" => $pathImgFond,
             'couleur_principale'=>$request->couleur_principale,
             'couleur_secondaire'=>$request->couleur_secondaire,
         ]);

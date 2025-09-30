@@ -13,7 +13,7 @@ class Univers extends Model
         'nom',
         'description',
         "lien_vers_le_logo",
-        "lien_vers_l'image",
+        "lien_vers_l_image",
         "couleur_secondaire",
         "couleur_principale",
     ];
