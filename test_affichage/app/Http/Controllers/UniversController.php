@@ -26,7 +26,8 @@ class UniversController extends Controller
      */
     public function create()
     {
-        //
+                $liste = Univers::all();
+        return view('formulaire' , compact('liste')); //affiche le formulaire de création
     }
 
     /**
