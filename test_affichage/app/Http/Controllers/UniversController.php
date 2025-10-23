@@ -26,7 +26,7 @@ class UniversController extends Controller
      */
     public function create()
     {
-                $liste = Univers::all();
+        $liste = Univers::all();
         return view('formulaire' , compact('liste')); //affiche le formulaire de création
     }
 
@@ -81,7 +81,23 @@ class UniversController extends Controller
     {
         //
     }
+    public function supprimer($id){
+         $univers = Univers::findOrFail($id);
 
+    // Supprimer les fichiers image associés
+    if ($univers->lien_vers_le_logo) {
+        \Storage::disk('public')->delete($univers->lien_vers_le_logo);
+    }
+    if ($univers->lien_vers_l_image) {
+        \Storage::disk('public')->delete($univers->lien_vers_l_image);
+    }
+
+    // Supprimer l'univers
+    $univers->delete();
+
+    return redirect()->route('/')->with('success', 'Univers supprimé avec succès !');
+
+    }
     /**
      * Remove the specified resource from storage.
      */

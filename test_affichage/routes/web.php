@@ -5,11 +5,6 @@ use App\Http\Controllers\AcceuilController;
 use App\Http\Controllers\UniversController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -23,7 +18,7 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 
-
+Route::delete('/univers/{id}', [UniversController::class,'supprimer'])->name('univers.supprimer');
 Route::get("/", [UniversController::class,'index'])->name('/');
 Route::get("/AjouterForm", [UniversController::class,'create'])->name('Ajouter.form');
 Route::post("/AjouterForm",[UniversController::class,'store'])->name('Ajouter.store');
