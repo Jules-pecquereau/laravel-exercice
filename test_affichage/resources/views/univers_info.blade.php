@@ -2,7 +2,7 @@
 
 @section("content")
 <div>
-    <table class="table table-success table-striped">
+    <table class="table table-success ">
         <thead>
             <tr>
                 <th>nom et prénom</th>
@@ -17,28 +17,30 @@
             @forelse ($liste as $Univers)
                 <tr>
                     <td>{{ $Univers->nom }}</td>
-                    <td><img src="{{ asset('storage/' . $Univers->lien_vers_le_logo) }}" alt=""></td>
-                    <td><img src="{{ asset('storage/' . $Univers->lien_vers_l_image) }}" alt=""></td>
+                    <td><img src="{{ asset('storage/' . $Univers->lien_vers_le_logo) }}" alt="" style="width:80px"></td>
+                    <td><img src="{{ asset('storage/' . $Univers->lien_vers_l_image) }}" alt="" style="width:80px"></td>
                     <td style="background-color: {{ $Univers->couleur_principale }}">{{ $Univers->couleur_principale }}</td>
                     <td style="background-color: {{ $Univers->couleur_secondaire }}">{{ $Univers->couleur_secondaire }}</td>
                     <td>
-                        <div class="dropdown">
-                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                les actions
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a class="dropdown-item" href="#">modifier</a>
-                                </li>
-                                <li>
-                                    <form action="{{ route('univers.supprimer', $Univers->id) }}" method="POST" onsubmit="return confirm('Supprimer cet univers ?')" style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="dropdown-item text-danger">supprimer</button>
-                                    </form>
-                                </li>
-                            </ul>
-                        </div>
+                        @auth
+                            <div class="dropdown">
+                                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    les actions
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('univers.edit', $Univers->id) }}">modifier</a>
+                                    </li>
+                                    <li>
+                                        <form action="{{ route('univers.supprimer', $Univers->id) }}" method="POST" onsubmit="return confirm('Supprimer cet univers ?')" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="dropdown-item text-danger">supprimer</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        @endauth
                     </td>
                 </tr>
             @empty
@@ -48,5 +50,11 @@
             @endforelse
         </tbody>
     </table>
+
+    @auth
+        <div class="mt-3 text-center">
+            <a href="{{ route('Ajouter.form') }}" class="btn btn-success">Ajouter un univers</a>
+        </div>
+    @endauth
 </div>
 @endsection

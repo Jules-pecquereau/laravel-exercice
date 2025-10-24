@@ -69,18 +69,51 @@ class UniversController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Univers $univers)
-    {
-        //
-    }
+        public function edit($id)
+            {
+                $univers = Univers::findOrFail($id);
+                return view('formulaire', compact('univers'));
+            }
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Univers $univers)
-    {
-        //
-    }
+
+        public function update(Request $request, $id)
+            {
+                $univers = Univers::findOrFail($id);
+
+                $request->validate([
+                    'nom' => 'required|max:255',
+                    'description' => 'required|max:1000',
+                    'couleur_principale' => 'required|hex_color',
+                    'couleur_secondaire' => 'required|hex_color',
+                ]);
+
+
+                if ($request->hasFile('img')) {
+                    \Storage::disk('public')->delete($univers->lien_vers_le_logo);
+                    $univers->lien_vers_le_logo = $request->file('img')->store('image', 'public');
+                }
+
+                if ($request->hasFile('ImgDeFond')) {
+                    \Storage::disk('public')->delete($univers->lien_vers_l_image);
+                    $univers->lien_vers_l_image = $request->file('ImgDeFond')->store('image', 'public');
+                }
+
+
+                $univers->update([
+                    'nom' => $request->nom,
+                    'description' => $request->description,
+                    'couleur_principale' => $request->couleur_principale,
+                    'couleur_secondaire' => $request->couleur_secondaire,
+                ]);
+
+                return redirect()->route('/')->with('success', 'Univers mis à jour avec succès !');
+
+
+            }
     public function supprimer($id){
          $univers = Univers::findOrFail($id);
 

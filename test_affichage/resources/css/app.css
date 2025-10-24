@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.scale_info td{
+    transition: transform 0.3s ease;
+}
+.scale_info tr:hover td{
+    scale: 5;
+}

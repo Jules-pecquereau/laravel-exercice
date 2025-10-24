@@ -22,5 +22,6 @@ Route::delete('/univers/{id}', [UniversController::class,'supprimer'])->name('un
 Route::get("/", [UniversController::class,'index'])->name('/');
 Route::get("/AjouterForm", [UniversController::class,'create'])->name('Ajouter.form');
 Route::post("/AjouterForm",[UniversController::class,'store'])->name('Ajouter.store');
-
 Route::get("/logout", [UniversController::class , 'destroy'])->name('logout');
+Route::get('/univers/{id}/edit', [UniversController::class, 'edit'])->name('univers.edit');
+Route::put('/univers/{id}', [UniversController::class, 'update'])->name('univers.update');
