@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\Univers;
+use App\Models\Favori;
 use Illuminate\Http\Request;
+use App\Models\Univers;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
@@ -154,6 +155,31 @@ class UniversController extends Controller implements HasMiddleware
     Mail::to('jules.pecquereau4@gmail.com')->send(new InfoMail($details));
 
     return redirect()->route('/')->with('success', 'Univers supprimé avec succès !');
+}
+
+
+
+public function toggleFavori(Request $request)
+{
+    $universId = $request->input('univers_id');
+    $userId = auth()->id();
+
+    $favori = Favori::where('user_id', $userId)
+                    ->where('univers_id', $universId)
+                    ->first();
+
+    if ($favori) {
+        $favori->delete();
+        $status = 'removed';
+    } else {
+        Favori::create([
+            'user_id' => $userId,
+            'univers_id' => $universId
+        ]);
+        $status = 'added';
+    }
+
+    return response()->json(['status' => $status]);
 }
 
 }

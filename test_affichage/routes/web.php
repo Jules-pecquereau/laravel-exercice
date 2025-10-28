@@ -27,6 +27,7 @@ Route::middleware(['langue'])->group(function () {
     Route::put('/univers/{id}', [UniversController::class, 'update'])->name('univers.update');
     Route::delete('/univers/{id}', [UniversController::class, 'supprimer'])->name('univers.supprimer');
 });
+Route::post('/favoris/toggle', [UniversController::class, 'toggleFavori']);
 
 
 Route::get('/lang/{locale}', function ($locale) {
