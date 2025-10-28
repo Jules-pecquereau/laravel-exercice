@@ -5,22 +5,26 @@ namespace App\Http\Controllers;
 use App\Models\Univers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+use App\Mail\ContactMail;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\InfoMail;
 
-class UniversController extends Controller
+class UniversController extends Controller implements HasMiddleware
 {
     /**
      * Display a listing of the resource.
      */
+    public static function middleware(){
+        return[ new middleware('admin_test', ['univers.supprimer']) ];
+    }
     public function index()
     {
         $liste = Univers::all();
         return view('univers_info' , compact('liste'));
     }
-    public function AjouterForm()
-    {
-        $liste = Univers::all();
-        return view('formulaire' , compact('liste')); //affiche le formulaire de création
-    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -139,4 +143,20 @@ class UniversController extends Controller
         Auth::logout();
         return redirect()->route('/')->with('success', 'déconnecter');
     }
+    public function envoyerMail()
+{
+    $details = [
+        'nom' => 'Jules',
+        'email' => 'jules@example.com',
+        'message' => 'Ceci est un test Mailtrap ! 🚀'
+    ];
+
+    Mail::to('jules.pecquereau4@gmail.com')->send(new InfoMail($details));
+
+    return redirect()->route('/')->with('success', 'Univers supprimé avec succès !');
 }
+
+}
+
+
+

@@ -9,19 +9,23 @@
   <body>
       <h1>Univers</h1>
 
-      <h1>Bonjour {{ Auth::user()->name ?? null}}</h1>
+      <h1>{{__('Hello!')}} {{ Auth::user()->name ?? null}}</h1>
 
 
                         @if (auth::check() )
 
-                            <button type="button" class="btn btn-danger "><a class="dropdown-item" href="/logout" >se déconnecter</a></button>
+                            <button type="button" class="btn btn-danger "><a class="dropdown-item" href="/logout" >{{__('Log Out')}}</a></button>
                         @else
 
-                            <button type="button" class="btn btn-primary "><a class="dropdown-item" href="/login" >se connecter</a></button>
+                            <button type="button" class="btn btn-primary "><a class="dropdown-item" href="/login" >{{__('Log in')}}</a></button>
+                            <button type="button" class="btn btn-primary "><a class="dropdown-item" href="/register" >{{__('Register')}}</a></button>
                         @endif
 
 
                         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+                        <a href="{{ url('/lang/fr') }}">Français</a>
+                        <a href="{{ url('/lang/en') }}">English</a>
+                        <a href="{{url('/test-mail')}}">envoyer un mail test</a>
                         @yield("content")
 
 

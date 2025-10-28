@@ -5,12 +5,12 @@
     <table class="table table-success ">
         <thead>
             <tr>
-                <th>nom et prénom</th>
-                <th>logo de l'univers</th>
-                <th>la bannière de l'univers</th>
-                <th>la couleur principale de l'univers</th>
-                <th>la couleur secondaire de l'univers</th>
-                <th>action</th>
+                <th>{{__('name of the universe')}}</th>
+                <th>{{__('universe logo')}}</th>
+                <th>{{__('universe banner')}}</th>
+                <th>{{__('main color of the universe')}}</th>
+                <th>{{__('the secondary colour of the universe')}}</th>
+                <th>{{__('actions')}}</th>
             </tr>
         </thead>
         <tbody>
@@ -24,19 +24,24 @@
                     <td>
                         @auth
                             <div class="dropdown">
+
                                 <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     les actions
                                 </a>
                                 <ul class="dropdown-menu">
+                                    @can('update_univer')
+                                        <li>
+                                            <a class="dropdown-item" href="{{ route('univers.edit', $Univers->id) }}">modifier</a>
+                                        </li>
+                                    @endcan
                                     <li>
-                                        <a class="dropdown-item" href="{{ route('univers.edit', $Univers->id) }}">modifier</a>
-                                    </li>
-                                    <li>
+                                    @can('delete_univer')
                                         <form action="{{ route('univers.supprimer', $Univers->id) }}" method="POST" onsubmit="return confirm('Supprimer cet univers ?')" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="dropdown-item text-danger">supprimer</button>
                                         </form>
+                                    @endcan
                                     </li>
                                 </ul>
                             </div>
@@ -52,9 +57,11 @@
     </table>
 
     @auth
-        <div class="mt-3 text-center">
-            <a href="{{ route('Ajouter.form') }}" class="btn btn-success">Ajouter un univers</a>
-        </div>
+        @can('create_univer')
+            <div class="mt-3 text-center">
+                <a href="{{ route('Ajouter.form') }}" class="btn btn-success">Ajouter un univers</a>
+            </div>
+        @endcan
     @endauth
 </div>
 @endsection
