@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('univers', function (Blueprint $table) {
             $table->id();
-            $table->string('nom' , 30);
+            $table->string('nom', 30);
             $table->text('description');
             $table->string("lien_vers_l'image");
-            $table->string("lien_vers_le_logo");
-            $table->string('couleur_principale' , 7);
-            $table->string('couleur_secondaire' , 7);
+            $table->string('lien_vers_le_logo');
+            $table->string('couleur_principale', 7);
+            $table->string('couleur_secondaire', 7);
             $table->timestamps('');
         });
     }

@@ -1,7 +1,5 @@
 @extends('layout.header')
-@php
-    $favoris = auth()->user()->favoris()->pluck('univers_id')->toArray();
-@endphp
+
 @section("content")
 <div>
     <table class="table table-success ">
